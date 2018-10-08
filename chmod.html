@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>CHMOD ONLINE EMULATOR</title>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<meta content="CHMOD ONLINE EMULATOR" name="description" />
+		<!-- Twitter Bootstrap -->
+		<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet" />
+		<style type="text/css">
+body {
+		padding-top: 60px;
+		padding-bottom: 40px;
+	}		</style>
+		<!--[if lt IE 9]>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.js"></script>
+		<![endif]--><script type="text/javascript">  
+	/*
+	Jeroen's Chmod Calculator- By Jeroen Vermeulen of Alphamega Hosting <jeroen@alphamegahosting.com> 
+	Visit http://www.javascriptkit.com for this script and more
+	This notice must stay intact
+	*/
+	function octalchange() 
+	{
+		var val = document.chmod.t_total.value;
+		var ownerbin = parseInt(val.charAt(0)).toString(2);
+		while (ownerbin.length<3) { ownerbin="0"+ownerbin; };
+		var groupbin = parseInt(val.charAt(1)).toString(2);
+		while (groupbin.length<3) { groupbin="0"+groupbin; };
+		var otherbin = parseInt(val.charAt(2)).toString(2);
+		while (otherbin.length<3) { otherbin="0"+otherbin; };
+		document.chmod.owner4.checked = parseInt(ownerbin.charAt(0)); 
+		document.chmod.owner2.checked = parseInt(ownerbin.charAt(1));
+		document.chmod.owner1.checked = parseInt(ownerbin.charAt(2));
+		document.chmod.group4.checked = parseInt(groupbin.charAt(0)); 
+		document.chmod.group2.checked = parseInt(groupbin.charAt(1));
+		document.chmod.group1.checked = parseInt(groupbin.charAt(2));
+		document.chmod.other4.checked = parseInt(otherbin.charAt(0)); 
+		document.chmod.other2.checked = parseInt(otherbin.charAt(1));
+		document.chmod.other1.checked = parseInt(otherbin.charAt(2));
+		calc_chmod(1);
+	};
+	function calc_chmod(nototals)
+	{
+		var users = new Array("owner", "group", "other");
+		var totals = new Array("","","");
+		var syms = new Array("","","");
+		for (var i=0; i<users.length; i++)
+		{
+			var user=users[i];
+			var field4 = user + "4";
+			var field2 = user + "2";
+			var field1 = user + "1";
+			//var total = "t_" + user;
+			var symbolic = "sym_" + user;
+			var number = 0;
+			var sym_string = "";
+			if (document.chmod[field4].checked == true) { number += 4; }
+			if (document.chmod[field2].checked == true) { number += 2; }
+			if (document.chmod[field1].checked == true) { number += 1; }
+			if (document.chmod[field4].checked == true) {
+				sym_string += "r";
+			} else {
+				sym_string += "-";
+			}
+			if (document.chmod[field2].checked == true) {
+				sym_string += "w";
+			} else {
+				sym_string += "-";
+			}
+			if (document.chmod[field1].checked == true) {
+				sym_string += "x";
+			} else {
+				sym_string += "-";
+			}
+			//if (number == 0) { number = ""; }
+			//document.chmod[total].value = 
+			totals[i] = totals[i]+number;
+			syms[i] =  syms[i]+sym_string;
+		};
+		if (!nototals) document.chmod.t_total.value = totals[0] + totals[1] + totals[2];
+		document.chmod.sym_total.value = "-" + syms[0] + syms[1] + syms[2];
+	}
+	window.onload=octalchange
+	//-->
+	</script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="hero-unit">
+				<h1>
+					CHMOD ONLINE EMULATOR</h1>
+				<p>
+					A nice way to practice chmod</p>
+			</div>
+			<div class="row show-grid">
+				<div class="span8 offset4">
+					Permissions:
+					<form name="chmod">
+						<table>
+							<tbody>
+								<tr align="LEFT" valign="MIDDLE">
+									<td>
+										&nbsp;</td>
+									<td>
+										<input maxlength="3" name="t_total" onkeyup="octalchange()" type="text" value="751" /></td>
+									<td>
+										<input name="sym_total" readonly="1" size="12" type="text" value="" /></td>
+								</tr>
+							</tbody>
+						</table>
+						<br />
+						<table border="0" cellpadding="2" cellspacing="0">
+							<tbody>
+								<tr bgcolor="#333333">
+									<td align="left" width="60">
+										&nbsp;</td>
+									<td align="center" style="color:white" width="55">
+										<b>owner </b></td>
+									<td align="center" style="color:white" width="55">
+										<b>group </b></td>
+									<td align="center" style="color:white" width="55">
+										<b>other </b></td>
+								</tr>
+								<tr bgcolor="#dddddd">
+									<td align="left" bgcolor="#FFFFFF" nowrap="nowrap" width="60">
+										read</td>
+									<td align="center" bgcolor="#EEEEEE" width="55">
+										<input name="owner4" onclick="calc_chmod()" type="checkbox" value="4" /></td>
+									<td align="center" bgcolor="#ffffff" width="55">
+										<input name="group4" onclick="calc_chmod()" type="checkbox" value="4" /></td>
+									<td align="center" bgcolor="#EEEEEE" width="55">
+										<input name="other4" onclick="calc_chmod()" type="checkbox" value="4" /></td>
+								</tr>
+								<tr bgcolor="#dddddd">
+									<td align="left" bgcolor="#FFFFFF" nowrap="nowrap" width="60">
+										write</td>
+									<td align="center" bgcolor="#EEEEEE" width="55">
+										<input name="owner2" onclick="calc_chmod()" type="checkbox" value="2" /></td>
+									<td align="center" bgcolor="#ffffff" width="55">
+										<input name="group2" onclick="calc_chmod()" type="checkbox" value="2" /></td>
+									<td align="center" bgcolor="#EEEEEE" width="55">
+										<input name="other2" onclick="calc_chmod()" type="checkbox" value="2" /></td>
+								</tr>
+								<tr bgcolor="#dddddd">
+									<td align="left" bgcolor="#FFFFFF" nowrap="nowrap" width="60">
+										execute</td>
+									<td align="center" bgcolor="#EEEEEE" width="55">
+										<input name="owner1" onclick="calc_chmod()" type="checkbox" value="1" /></td>
+									<td align="center" bgcolor="#ffffff" width="55">
+										<input name="group1" onclick="calc_chmod()" type="checkbox" value="1" /></td>
+									<td align="center" bgcolor="#EEEEEE" width="55">
+										<input name="other1" onclick="calc_chmod()" type="checkbox" value="1" /></td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</div>
+			<footer>
+				<p>
+					&copy; VeneHosting.com 2012</p>
+			</footer>
+		</div>
+	</body>
+</html>
+
