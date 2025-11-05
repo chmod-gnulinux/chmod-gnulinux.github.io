@@ -1,207 +1,214 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, user-scalable=no">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>CHMOD ONLINE EMULATOR</title>
-		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-		<meta content="CHMOD ONLINE EMULATOR" name="description" />
-		<!--[if lt IE 9]>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.js"></script>
-		<![endif]--><script type="text/javascript">  
-	/*
-	Jeroen's Chmod Calculator- By Jeroen Vermeulen of Alphamega Hosting <jeroen@alphamegahosting.com> 
-	Visit http://www.javascriptkit.com for this script and more
-	This notice must stay intact
-	*/
-	function octalchange() 
-	{
-		var val = document.chmod.t_total.value;
-		var ownerbin = parseInt(val.charAt(0)).toString(2);
-		while (ownerbin.length<3) { ownerbin="0"+ownerbin; };
-		var groupbin = parseInt(val.charAt(1)).toString(2);
-		while (groupbin.length<3) { groupbin="0"+groupbin; };
-		var otherbin = parseInt(val.charAt(2)).toString(2);
-		while (otherbin.length<3) { otherbin="0"+otherbin; };
-		document.chmod.owner4.checked = parseInt(ownerbin.charAt(0)); 
-		document.chmod.owner2.checked = parseInt(ownerbin.charAt(1));
-		document.chmod.owner1.checked = parseInt(ownerbin.charAt(2));
-		document.chmod.group4.checked = parseInt(groupbin.charAt(0)); 
-		document.chmod.group2.checked = parseInt(groupbin.charAt(1));
-		document.chmod.group1.checked = parseInt(groupbin.charAt(2));
-		document.chmod.other4.checked = parseInt(otherbin.charAt(0)); 
-		document.chmod.other2.checked = parseInt(otherbin.charAt(1));
-		document.chmod.other1.checked = parseInt(otherbin.charAt(2));
-		calc_chmod(1);
-	};
-	function calc_chmod(nototals)
-	{
-		var users = new Array("owner", "group", "other");
-		var totals = new Array("","","");
-		var syms = new Array("","","");
-		for (var i=0; i<users.length; i++)
-		{
-			var user=users[i];
-			var field4 = user + "4";
-			var field2 = user + "2";
-			var field1 = user + "1";
-			//var total = "t_" + user;
-			var symbolic = "sym_" + user;
-			var number = 0;
-			var sym_string = "";
-			if (document.chmod[field4].checked == true) { number += 4; }
-			if (document.chmod[field2].checked == true) { number += 2; }
-			if (document.chmod[field1].checked == true) { number += 1; }
-			if (document.chmod[field4].checked == true) {
-				sym_string += "r";
-			} else {
-				sym_string += "-";
-			}
-			if (document.chmod[field2].checked == true) {
-				sym_string += "w";
-			} else {
-				sym_string += "-";
-			}
-			if (document.chmod[field1].checked == true) {
-				sym_string += "x";
-			} else {
-				sym_string += "-";
-			}
-			//if (number == 0) { number = ""; }
-			//document.chmod[total].value = 
-			totals[i] = totals[i]+number;
-			syms[i] =  syms[i]+sym_string;
-		};
-		if (!nototals) document.chmod.t_total.value = totals[0] + totals[1] + totals[2];
-		document.chmod.sym_total.value = "-" + syms[0] + syms[1] + syms[2];
-	}
-	window.onload=octalchange
-	//-->
-	</script>
-	</head>
-	<body>
-		<p>
-			&nbsp;</p>
-		<div>
-			<h1>
-				CALCULADORA PERMISOS CHMOD</h1>
-			<p>
-				Para practicar chmod.</p>
-		</div>
-		<div>
-			<div>
-				<p>
-					Permisos:</p>
-				<form name="chmod">
-					<table>
-						<tbody>
-							<tr align="LEFT" valign="MIDDLE">
-								<td>
-									&nbsp;</td>
-								<td>
-									<input maxlength="3" name="t_total" onkeyup="octalchange()" type="text" value="751" /></td>
-								<td>
-									<input name="sym_total" readonly="1" size="12" type="text" value="" /></td>
-							</tr>
-						</tbody>
-					</table>
-					<br />
-					<table border="0" cellpadding="2" cellspacing="0" height="299" width="825">
-						<tbody>
-							<tr bgcolor="#333333">
-								<td style="text-align: center;" width="60">
-									<strong><span style="color:#ffffff;">Permisos</span></strong></td>
-								<td align="center" style="color:white" width="55">
-									<b>owner / propietario </b></td>
-								<td align="center" style="color:white" width="55">
-									<b>group / grupo </b></td>
-								<td align="center" style="color:white" width="55">
-									<p>
-										<b>other / <span class="short_text" id="result_box" lang="es" tabindex="-1"><span>otros</span></span></b></p>
-								</td>
-							</tr>
-							<tr bgcolor="#dddddd">
-								<td bgcolor="#FFFFFF" nowrap="nowrap" style="text-align: center;" width="60">
-									read / Lectura</td>
-								<td align="center" bgcolor="#EEEEEE" width="55">
-									<input name="owner4" onclick="calc_chmod()" type="checkbox" value="4" /></td>
-								<td align="center" bgcolor="#ffffff" width="55">
-									<input name="group4" onclick="calc_chmod()" type="checkbox" value="4" /></td>
-								<td align="center" bgcolor="#EEEEEE" width="55">
-									<input name="other4" onclick="calc_chmod()" type="checkbox" value="4" /></td>
-							</tr>
-							<tr bgcolor="#dddddd">
-								<td bgcolor="#FFFFFF" nowrap="nowrap" style="text-align: center;" width="60">
-									write / Escritura</td>
-								<td align="center" bgcolor="#EEEEEE" width="55">
-									<input name="owner2" onclick="calc_chmod()" type="checkbox" value="2" /></td>
-								<td align="center" bgcolor="#ffffff" width="55">
-									<input name="group2" onclick="calc_chmod()" type="checkbox" value="2" /></td>
-								<td align="center" bgcolor="#EEEEEE" width="55">
-									<input name="other2" onclick="calc_chmod()" type="checkbox" value="2" /></td>
-							</tr>
-							<tr bgcolor="#dddddd">
-								<td bgcolor="#FFFFFF" nowrap="nowrap" style="text-align: center;" width="60">
-									execute / <span class="short_text" id="result_box" lang="es" tabindex="-1"><span>ejecucion</span></span></td>
-								<td align="center" bgcolor="#EEEEEE" width="55">
-									<input name="owner1" onclick="calc_chmod()" type="checkbox" value="1" /></td>
-								<td align="center" bgcolor="#ffffff" width="55">
-									<input name="group1" onclick="calc_chmod()" type="checkbox" value="1" /></td>
-								<td align="center" bgcolor="#EEEEEE" width="55">
-									<input name="other1" onclick="calc_chmod()" type="checkbox" value="1" /></td>
-							</tr>
-						</tbody>
-					</table>
-				</form>
-			</div>
-		</div>
-		<footer>
-			<p style="text-align: center;">
-				<a href="https://www.gnu.org/licenses/gpl.html" target="_blank">GPLv3+</a></p>
-		</footer>
-		<p>
-			&nbsp;</p>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>CHMOD ONLINE EMULATOR</title>
+  <meta name="description" content="Calculadora de permisos CHMOD en GNU/Linux" />
+  <style>
+    @font-face {
+      font-family: 'FreeMono';
+      src: url('./FreeMono.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
-<p>
-			<strong>Permisos a Archivo:</strong></p>
-		<pre class="tab tcy">
-sudo chmod 775 archivo
+    body {
+      font-family: 'FreeMono', monospace;
+      background: #f8f8f8;
+      color: #111;
+      margin: 0;
+      padding: 1em;
+      line-height: 1.5;
+    }
 
-sudo chmod 755 /home/usuario/archivo
+    h1 {
+      text-align: center;
+      color: #222;
+    }
 
-sudo chmod  u=rwx,g=rx,o=rx archivo</pre>
-		<p>
-			&nbsp;</p>
-		<p>
-			&nbsp;</p>
-		<p>
-			<strong>Permisos a Directorio o Carpeta:</strong></p>
-		<pre class="tab tcy">
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+    }
 
-sudo chmod -R 755 directorio
+    td {
+      padding: 6px;
+      text-align: center;
+    }
 
-sudo chmod -R 755 carpeta
+    input[type="text"] {
+      font-family: 'FreeMono', monospace;
+      padding: 4px;
+      text-align: center;
+    }
 
-sudo chmod -R 755 /home/usuario/directorio
+    input[type="checkbox"] {
+      transform: scale(1.2);
+    }
 
+    button {
+      font-family: 'FreeMono', monospace;
+      padding: 0.6em 1.2em;
+      background: #444;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0.3em;
+      transition: background 0.2s;
+    }
 
-sudo chmod -R u=rwx,g=rx,o=rx directorio</pre>
-		<p>
-			u = propietario</p>
-		<p>
-			g = grupo</p>
-		<p>
-			o = otros</p>
-		<p>
-			&nbsp;</p>
-		<p>
-			&nbsp;</p>
+    button:hover {
+      background: #000;
+    }
 
+    footer {
+      text-align: center;
+      margin-top: 2em;
+      font-size: 0.9em;
+    }
 
-<p>
-			<a href="https://chmod-gnulinux.github.io/chmodes.html" target="_blank">https://chmod-gnulinux.github.io/chmodes.html</a></p>
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+      }
+      table {
+        width: 100%;
+      }
+    }
+  </style>
 
-	</body>
+  <script>
+    function octalchange() {
+      var val = document.chmod.t_total.value;
+      var ownerbin = parseInt(val.charAt(0)).toString(2).padStart(3, '0');
+      var groupbin = parseInt(val.charAt(1)).toString(2).padStart(3, '0');
+      var otherbin = parseInt(val.charAt(2)).toString(2).padStart(3, '0');
+
+      document.chmod.owner4.checked = parseInt(ownerbin[0]);
+      document.chmod.owner2.checked = parseInt(ownerbin[1]);
+      document.chmod.owner1.checked = parseInt(ownerbin[2]);
+      document.chmod.group4.checked = parseInt(groupbin[0]);
+      document.chmod.group2.checked = parseInt(groupbin[1]);
+      document.chmod.group1.checked = parseInt(groupbin[2]);
+      document.chmod.other4.checked = parseInt(otherbin[0]);
+      document.chmod.other2.checked = parseInt(otherbin[1]);
+      document.chmod.other1.checked = parseInt(otherbin[2]);
+      calc_chmod(1);
+    }
+
+    function calc_chmod(nototals) {
+      const users = ["owner", "group", "other"];
+      const totals = [];
+      const syms = [];
+
+      users.forEach(user => {
+        let total = 0;
+        let sym = "";
+        [4, 2, 1].forEach(v => {
+          const chk = document.chmod[user + v].checked;
+          total += chk ? v : 0;
+          sym += chk ? (v == 4 ? "r" : v == 2 ? "w" : "x") : "-";
+        });
+        totals.push(total);
+        syms.push(sym);
+      });
+
+      if (!nototals) document.chmod.t_total.value = totals.join("");
+      document.chmod.sym_total.value = "-" + syms.join("");
+    }
+
+    function mostrarLicencia(tipo) {
+      let texto = '';
+      switch (tipo) {
+        case 'gpl':
+          texto = 'Código bajo GNU General Public License v3 o posterior (GPLv3+).';
+          break;
+        case 'fdl':
+          texto = 'Documentación bajo GNU Free Documentation License (GFDL).';
+          break;
+        case 'fal':
+          texto = 'Diseño visual bajo Free Art License 1.3.';
+          break;
+      }
+      alert(texto);
+    }
+
+    window.onload = octalchange;
+  </script>
+</head>
+
+<body>
+  <h1>CALCULADORA DE PERMISOS CHMOD</h1>
+  <p style="text-align:center;">Simulador para practicar el uso de <strong>chmod</strong> en GNU/Linux.</p>
+
+  <form name="chmod">
+    <table border="1">
+      <tr style="background:#333;color:#fff;">
+        <td>Permisos</td>
+        <td>Propietario (u)</td>
+        <td>Grupo (g)</td>
+        <td>Otros (o)</td>
+      </tr>
+      <tr style="background:#eee;">
+        <td>Lectura (r)</td>
+        <td><input type="checkbox" name="owner4" value="4" onclick="calc_chmod()"></td>
+        <td><input type="checkbox" name="group4" value="4" onclick="calc_chmod()"></td>
+        <td><input type="checkbox" name="other4" value="4" onclick="calc_chmod()"></td>
+      </tr>
+      <tr style="background:#fff;">
+        <td>Escritura (w)</td>
+        <td><input type="checkbox" name="owner2" value="2" onclick="calc_chmod()"></td>
+        <td><input type="checkbox" name="group2" value="2" onclick="calc_chmod()"></td>
+        <td><input type="checkbox" name="other2" value="2" onclick="calc_chmod()"></td>
+      </tr>
+      <tr style="background:#eee;">
+        <td>Ejecución (x)</td>
+        <td><input type="checkbox" name="owner1" value="1" onclick="calc_chmod()"></td>
+        <td><input type="checkbox" name="group1" value="1" onclick="calc_chmod()"></td>
+        <td><input type="checkbox" name="other1" value="1" onclick="calc_chmod()"></td>
+      </tr>
+    </table>
+
+    <div style="text-align:center;margin-top:1em;">
+      <label>Permiso numérico:</label>
+      <input name="t_total" maxlength="3" value="751" onkeyup="octalchange()">
+      <label>Modo simbólico:</label>
+      <input name="sym_total" readonly size="12" value="">
+    </div>
+  </form>
+
+  <section style="margin-top:2em;">
+    <h3>Explicación</h3>
+    <p><strong>chmod</strong> (change mode) permite cambiar los permisos de archivos y directorios. Cada permiso tiene un valor:</p>
+    <ul>
+      <li>r (lectura) = 4</li>
+      <li>w (escritura) = 2</li>
+      <li>x (ejecución) = 1</li>
+    </ul>
+    <p>Por ejemplo, <code>chmod 755 archivo</code> otorga todos los permisos al propietario (7 = 4+2+1) y lectura/ejecución al grupo y otros (5 = 4+1).</p>
+    <p>También puede usarse el modo simbólico: <code>chmod g+w archivo</code> añade permiso de escritura al grupo.</p>
+  </section>
+
+  <div style="text-align:center;margin-top:1em;">
+    <button onclick="mostrarLicencia('gpl')">Licencia GNU GPL v3+</button>
+    <button onclick="mostrarLicencia('fdl')">Licencia GNU FDL</button>
+    <button onclick="mostrarLicencia('fal')">Free Art License 1.3</button>
+  </div>
+
+  <footer>
+    <p><a href="https://gitlab.com/chmod-gnulinux" target="_blank">Repositorio en GitLab</a></p>
+  </footer>
+
+  <!-- ============================================================
+  Licencias visibles también en el código fuente:
+  - GNU GPL v3 o posterior: https://www.gnu.org/licenses/gpl-3.0.html
+  - GNU FDL: https://www.gnu.org/licenses/fdl-1.3.html
+  - Free Art License 1.3: https://artlibre.org/licence/lal/en/
+  ============================================================ -->
+
+</body>
 </html>
-
